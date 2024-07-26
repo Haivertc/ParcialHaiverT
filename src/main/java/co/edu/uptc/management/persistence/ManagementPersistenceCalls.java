@@ -101,13 +101,20 @@ public class ManagementPersistenceCalls {
 
     public int getTotalMinutesByType(String callType) {
         int totalMinutes = 0;
-        for (CallDTO call : callList) {
-            if (callType == null || call.getCallType().equalsIgnoreCase(callType)) {
+        if (callType == null || callType.trim().isEmpty()) {
+            for (CallDTO call : callList) {
                 totalMinutes += call.getCallDuration();
+            }
+        } else {
+            for (CallDTO call : callList) {
+                if (call.getCallType().equalsIgnoreCase(callType)) {
+                    totalMinutes += call.getCallDuration();
+                }
             }
         }
         return totalMinutes;
     }
+
 
     public List<CallDTO> getCallsByFilter(CallDTO filter) {
         List<CallDTO> filteredCalls = new ArrayList<>();
