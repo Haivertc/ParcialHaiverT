@@ -3,7 +3,9 @@ package co.edu.uptc.management.persistence;
 import co.edu.uptc.management.call.dto.CallDTO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ManagementPersistenceCalls {
 
@@ -30,6 +32,20 @@ public class ManagementPersistenceCalls {
         return null;
     }
 
+    public Map<String, Object> getCallInfoById(String id) {
+        CallDTO call = getCallById(id);
+        if (call != null) {
+            double totalLlamada = call.getCallRate() * call.getCallDuration();
+            Map<String, Object> callInfo = new HashMap<>();
+            callInfo.put("numeroOrigen", call.getPhoneNumberOrigin());
+            callInfo.put("numeroDestino", call.getPhoneNumberDestination());
+            callInfo.put("totalLlamada", totalLlamada);
+            return callInfo;
+        }
+        return null;
+    }
+
+    
     public boolean addCall(CallDTO callDTO) {
         if (getCallById(callDTO.getId()) == null) {
             callDTO.setCallRate(calculateCallRate(callDTO));

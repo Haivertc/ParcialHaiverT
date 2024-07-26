@@ -1,6 +1,8 @@
 package co.edu.uptc.management.call.rest;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -58,5 +60,12 @@ public class ManagementCallsService {
     @Produces(MediaType.APPLICATION_JSON)
     public List<CallDTO> getCallsByFilter(CallDTO filter) {
         return managementPersistenceCalls.getCallsByFilter(filter);
+    }
+    
+    @GET
+    @Path("/getCallByCode")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Map<String, Object> getCallByCode(@QueryParam("id") String id) {
+        return managementPersistenceCalls.getCallInfoById(id);
     }
 }
